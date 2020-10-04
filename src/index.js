@@ -1,35 +1,27 @@
 export default function(input) {
-  let coordenates = input.split('\n');
-  let plateau = coordenates[0];
+  let data = input.split('\n');
+  let plateau = data.shift();
   let plateauDimensions = plateau.split(' ');
   let xPlateau = parseInt(plateauDimensions[0]);
   let yPlateau = parseInt(plateauDimensions[1]);
-
-  let roverPosition = coordenates[1];
-  let roverInformation = roverPosition.split(' ');
-  let x = parseInt(roverInformation[0]);
-  let y = parseInt(roverInformation[1]);
-  let roverOrientation = roverInformation[2];
-
-  let commands = coordenates[2].split('');
-
-  if (coordenates[3] == undefined) {
-    return rover(xPlateau, yPlateau, x, y, roverOrientation, commands);
+  const roverInstructions = [];
+  for (let i = 0; i < data.length; i += 2) {
+    roverInstructions.push([data[i], data[i + 1]]);
   }
 
-  let secondRoverPosition = coordenates[3];
-  let secondRoverInformation = secondRoverPosition.split(' ');
-  let secondX = parseInt(secondRoverInformation[0]);
-  let secondY = parseInt(secondRoverInformation[1]);
-  let secondRoverOrientation = secondRoverInformation[2];
+  return roverInstructions
+    .map(instructions => {
+      let roverPosition = instructions[0];
+      let roverInformation = roverPosition.split(' ');
+      let x = parseInt(roverInformation[0]);
+      let y = parseInt(roverInformation[1]);
+      let roverOrientation = roverInformation[2];
 
-  let secondRoverCommands = coordenates[4].split('');
+      let commands = instructions[1].split('');
 
-  return (
-    rover(xPlateau, yPlateau, x, y, roverOrientation, commands) +
-    '\n' +
-    rover(xPlateau, yPlateau, secondX, secondY, secondRoverOrientation, secondRoverCommands)
-  );
+      return rover(xPlateau, yPlateau, x, y, roverOrientation, commands);
+    })
+    .join('\n');
 }
 
 function rover(xPlateau, yPlateau, x, y, roverOrientation, commands) {

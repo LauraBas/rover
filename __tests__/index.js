@@ -37,5 +37,8 @@ describe('our program', () => {
 
   it('should calculate multiple rovers', () => {
     expect(ourProgram('3 3\n0 0 N\nMM\n0 0 E\nMM')).toEqual('0 2 N\n2 0 E');
+    expect(ourProgram('3 3\n0 0 N\nMM\n0 0 E\nMM\n0 0 N\nMM\n0 0 E\nMM')).toEqual(
+      '0 2 N\n2 0 E\n0 2 N\n2 0 E'
+    );
   });
 });
