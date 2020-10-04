@@ -20,6 +20,10 @@
     "coverage": "jest --coverage",
     "prepublishOnly": "npm run build"
   },
+  "jest": {
+    "verbose": true,
+    "testURL": "http://localhost/"
+  },
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged"
