@@ -4,12 +4,35 @@ export default function(input) {
   let plateauDimensions = plateau.split(' ');
   let xPlateau = parseInt(plateauDimensions[0]);
   let yPlateau = parseInt(plateauDimensions[1]);
+
   let roverPosition = coordenates[1];
   let roverInformation = roverPosition.split(' ');
   let x = parseInt(roverInformation[0]);
   let y = parseInt(roverInformation[1]);
   let roverOrientation = roverInformation[2];
 
+  let commands = coordenates[2].split('');
+
+  if (coordenates[3] == undefined) {
+    return rover(xPlateau, yPlateau, x, y, roverOrientation, commands);
+  }
+
+  let secondRoverPosition = coordenates[3];
+  let secondRoverInformation = secondRoverPosition.split(' ');
+  let secondX = parseInt(secondRoverInformation[0]);
+  let secondY = parseInt(secondRoverInformation[1]);
+  let secondRoverOrientation = secondRoverInformation[2];
+
+  let secondRoverCommands = coordenates[4].split('');
+
+  return (
+    rover(xPlateau, yPlateau, x, y, roverOrientation, commands) +
+    '\n' +
+    rover(xPlateau, yPlateau, secondX, secondY, secondRoverOrientation, secondRoverCommands)
+  );
+}
+
+function rover(xPlateau, yPlateau, x, y, roverOrientation, commands) {
   function moveRover(c) {
     if (c == 'M') {
       move();
@@ -68,10 +91,8 @@ export default function(input) {
     }
   }
 
-  let comands = coordenates[2].split('');
-
-  for (let i = 0; i < comands.length; i++) {
-    moveRover(comands[i]);
+  for (let i = 0; i < commands.length; i++) {
+    moveRover(commands[i]);
     if (x > xPlateau || x < 0) {
       return 'Fall off';
     } else if (y > yPlateau || y < 0) {
